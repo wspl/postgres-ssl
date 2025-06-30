@@ -1,4 +1,4 @@
-FROM pgvector/pgvector:v0.8.0-pg17
+FROM pgvector/pgvector:pg17
 
 # Install OpenSSL and sudo
 RUN apt-get update && apt-get install -y openssl sudo
