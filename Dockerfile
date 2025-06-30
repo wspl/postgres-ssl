@@ -1,4 +1,4 @@
-FROM postgres:latest
+FROM pgvector/pgvector:v0.8.0-pg17
 
 # Install OpenSSL and sudo
 RUN apt-get update && apt-get install -y openssl sudo
@@ -9,6 +9,7 @@ RUN echo "postgres ALL=(root) NOPASSWD: /usr/bin/mkdir, /bin/chown, /usr/bin/ope
 # Add init scripts while setting permissions
 COPY --chmod=755 init-ssl.sh /docker-entrypoint-initdb.d/init-ssl.sh
 COPY --chmod=755 wrapper.sh /usr/local/bin/wrapper.sh
+COPY ./add-vector-extension.sql /docker-entrypoint-initdb.d/
 
 ENTRYPOINT ["wrapper.sh"]
 CMD ["postgres", "--port=5432"]
